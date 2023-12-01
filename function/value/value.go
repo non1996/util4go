@@ -1,8 +1,23 @@
 package value
 
 import (
+	"unsafe"
+
 	"github.com/non1996/util4go/constraint"
 )
+
+type xface struct {
+	x    uintptr
+	data unsafe.Pointer
+}
+
+func IsNil(v any) bool {
+	return (*xface)(unsafe.Pointer(&v)).data == nil
+}
+
+func NonNil(v any) bool {
+	return !IsNil(v)
+}
 
 func Noop[T any](t T) T {
 	return t
